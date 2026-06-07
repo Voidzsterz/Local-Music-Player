@@ -59,7 +59,6 @@ void Renderer::newFrame()
     ImGui::NewFrame();
 
     // UI is NOT drawn here, everything for UI is handled in the "ui" folder
-    // This simply c
 }
 
 void Renderer::presentFrame()

@@ -85,20 +85,17 @@ void UI::renderPlaying()
   ImGui::PopStyleVar();
 
   ImGui::Text("No songs playing. (hardcoded, potentially shoould be hidden)");
-  
+
   ImGui::End();
 }
 
 void UI::renderDockspace()
 {
-  // get the main viewport — this represents the entire application window
   ImGuiViewport* viewport = ImGui::GetMainViewport();
 
-  // position and size the next window to cover the entire application window
   ImGui::SetNextWindowPos(viewport->WorkPos);
   ImGui::SetNextWindowSize(viewport->WorkSize);
 
-  // flags that make the window invisible and non-interactive
   ImGuiWindowFlags flags =
     ImGuiWindowFlags_NoDocking |
     ImGuiWindowFlags_NoTitleBar |
@@ -113,8 +110,6 @@ void UI::renderDockspace()
   ImGui::Begin("Dockspace", nullptr, flags);
   ImGui::PopStyleVar();
 
-  // create the actual dockspace inside this invisible window
-  // everything else will dock into this
   ImGui::DockSpace(ImGui::GetID("MyDockspace"));
 
   ImGui::End();

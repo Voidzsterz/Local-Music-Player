@@ -8,8 +8,8 @@ class Renderer;
 class App
 {
 public:
-    App(int width, int height);  // Constructor
-    ~App(); // Destructor
+    App(int width, int height);     // Constructor
+    ~App();                         // Destructor
     
     void run();
 private:

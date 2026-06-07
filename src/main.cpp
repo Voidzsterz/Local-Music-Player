@@ -10,6 +10,6 @@ This isn't intended to be a proper Music Player for daily usage.
 int main()
 {
     App app(1280, 720);
-    std::cout << "main.cpp: calling app.run()" << std::endl;
+    std::cout << "main.cpp, getting everything ready" << std::endl;
     app.run();
 }
