@@ -44,6 +44,8 @@ bool Renderer::init()
     std::cout << "ImGui Initalized" << std::endl;
 
     // ImGui configuration
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
     ImGui::StyleColorsDark();
 
     return true;
@@ -56,7 +58,7 @@ void Renderer::createFrame()
     ImGui::NewFrame();
 
     // ImGui
-    ImGui::Begin("Linux ImGui thing");
+    ImGui::Begin("Test");
     ImGui::Text("Text");
     ImGui::End();
 }
