@@ -36,7 +36,7 @@ void App::init()
     std::cout << "GLFW initalized" << std::endl;
     
     std::cout << "Creating GLFWwindow" << std::endl;
-    m_window = glfwCreateWindow(800, 600, "Music Player", NULL, NULL);
+    m_window = glfwCreateWindow(1080, 720, "Music Player", NULL, NULL);
     if (!m_window)
     {
         std::cout << "Failed to create GLFW window, refusing to continue." << std::endl;

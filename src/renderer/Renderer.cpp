@@ -58,7 +58,13 @@ void Renderer::createFrame()
     ImGui::NewFrame();
 
     // ImGui
-    ImGui::Begin("Test");
+    ImGui::Begin("Test1");
+    ImGui::Text("Text");
+    ImGui::End();
+    ImGui::Begin("Test2");
+    ImGui::Text("Text");
+    ImGui::End();
+    ImGui::Begin("Test3");
     ImGui::Text("Text");
     ImGui::End();
 }
