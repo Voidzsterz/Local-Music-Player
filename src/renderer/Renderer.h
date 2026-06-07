@@ -8,7 +8,7 @@ public:
     Renderer(GLFWwindow* window);
     ~Renderer();
     
-    void createFrame();
+    void newFrame();
     void presentFrame();
 private:
     GLFWwindow* m_window = nullptr;

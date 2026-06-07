@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Renderer.h"
+#include "../ui/UI.h"
 
 /*
 Initalizer lists runs before the constructor body
@@ -21,7 +22,7 @@ Renderer::Renderer(GLFWwindow* window)
     : m_window(window)
 { init(); }
 
-Renderer::~Renderer() { shutdown(); }
+Renderer::~Renderer(){ shutdown(); }
 
 bool Renderer::init()
 {
@@ -51,22 +52,14 @@ bool Renderer::init()
     return true;
 }
 
-void Renderer::createFrame()
+void Renderer::newFrame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // ImGui
-    ImGui::Begin("Test1");
-    ImGui::Text("Text");
-    ImGui::End();
-    ImGui::Begin("Test2");
-    ImGui::Text("Text");
-    ImGui::End();
-    ImGui::Begin("Test3");
-    ImGui::Text("Text");
-    ImGui::End();
+    // UI is NOT drawn here, everything for UI is handled in the "ui" folder
+    // This simply c
 }
 
 void Renderer::presentFrame()

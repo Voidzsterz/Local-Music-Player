@@ -20,7 +20,12 @@ Heap allocated members dont have those benefits (m_window, m_renderer)
 They must be manually deleted through the "delete" method
 */
 
-App::App()  { init(); }     // Constructor
+// This constructor in particular uses initalizer lists, documentation for that can be found in Renderer.cpp
+
+App::App(int width, int height) // Constructor
+    : m_windowWidth(width), m_windowHeight(height)
+{ init(); }
+
 App::~App() { shutdown(); } // Destructor
 
 void App::init()
@@ -58,7 +63,8 @@ void App::run()
     {    
         glfwPollEvents();
 
-        m_renderer->createFrame();
+        m_renderer->newFrame();
+        m_ui.render();
         m_renderer->presentFrame();
         glfwSwapBuffers(m_window);
     }

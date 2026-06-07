@@ -12,4 +12,5 @@ private:
     void renderSidebar();
     void renderContents();
     void renderPlaying();
+    void renderDockspace();
 };
