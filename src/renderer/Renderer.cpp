@@ -78,5 +78,9 @@ void Renderer::presentFrame()
 
 void Renderer::shutdown()
 {
-    // clean up imgui
+    std::cout << "Shutting down Renderer..." << std::endl;
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    std::cout << "Successfully shutdown Renderer" << std::endl;
 }
