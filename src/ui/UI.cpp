@@ -70,7 +70,7 @@ void UI::renderContents()
 void UI::renderPlaying()
 {
   ImGuiViewport* viewport = ImGui::GetMainViewport();
-
+  
   ImGui::SetNextWindowPos(ImVec2(viewport->WorkPos.x + 200.0f, viewport->WorkSize.y - 200));
   ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x - 200.0f,PLAYING_HEIGHT));
 
