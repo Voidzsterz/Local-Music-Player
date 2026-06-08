@@ -31,13 +31,13 @@ void UI::renderSidebar()
   ImGui::Begin("Sidebar", nullptr, flags);
     
   ImGui::BeginChild("##sidebar", ImVec2(200, 0), true);
-    if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
-    
-    if (ImGui::Selectable("Library", m_activeTab == ActiveTab::Library)) m_activeTab = ActiveTab::Library;
-    if (ImGui::Selectable("Directories", m_activeTab == ActiveTab::Directories)) m_activeTab = ActiveTab::Directories;
+      if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
 
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 24);
-    if (ImGui::Selectable("Settings", m_activeTab == ActiveTab::Settings)) m_activeTab = ActiveTab::Settings;
+      if (ImGui::Selectable("Library", m_activeTab == ActiveTab::Library)) m_activeTab = ActiveTab::Library;
+      if (ImGui::Selectable("Directories", m_activeTab == ActiveTab::Directories)) m_activeTab = ActiveTab::Directories;
+
+      ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 24);
+      if (ImGui::Selectable("Settings", m_activeTab == ActiveTab::Settings)) m_activeTab = ActiveTab::Settings;
   ImGui::EndChild();
 
   ImGui::PopStyleVar();  

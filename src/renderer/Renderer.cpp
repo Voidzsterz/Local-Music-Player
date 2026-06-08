@@ -45,9 +45,15 @@ bool Renderer::init()
     std::cout << "ImGui Initalized" << std::endl;
 
     // ImGui configuration
-    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     ImGui::StyleColorsDark();
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    ImVec4* colors = style.Colors;
+
+    colors[ImGuiCol_TableRowBg] = ImVec4(0.1f,0.1f,0.1f,1.0f);
 
     return true;
 }
