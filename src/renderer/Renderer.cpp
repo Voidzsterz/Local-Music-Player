@@ -54,11 +54,10 @@ bool Renderer::init()
 
 void Renderer::newFrame()
 {
+    // UI is NOT drawn here, everything for UI is handled in the "ui" folder
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
-    // UI is NOT drawn here, everything for UI is handled in the "ui" folder
 }
 
 void Renderer::presentFrame()

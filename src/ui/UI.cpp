@@ -32,7 +32,7 @@ void UI::renderSidebar()
     
   ImGui::BeginChild("##sidebar", ImVec2(200, 0), true);
     if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
-    if (ImGui::Selectable("Songs", m_activeTab == ActiveTab::Songs)) m_activeTab = ActiveTab::Songs;
+    
     if (ImGui::Selectable("Library", m_activeTab == ActiveTab::Library)) m_activeTab = ActiveTab::Library;
     if (ImGui::Selectable("Directories", m_activeTab == ActiveTab::Directories)) m_activeTab = ActiveTab::Directories;
 
@@ -59,6 +59,7 @@ void UI::renderContents()
           break;
       case ActiveTab::Directories:
           // draw directories
+          m_directories.render();
           break;
       case ActiveTab::Settings:
           // draw settings

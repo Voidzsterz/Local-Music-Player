@@ -31,3 +31,6 @@ libs/
 
 # Logs
 *.log
+
+# Personal
+notes/
