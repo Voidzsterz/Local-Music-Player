@@ -9,7 +9,7 @@ This isn't intended to be a proper Music Player for daily usage.
 
 int main()
 {
-    App app(720, 720);
+    App app(1080, 720);
     std::cout << "main.cpp, getting everything ready" << std::endl;
     app.run();
 }
