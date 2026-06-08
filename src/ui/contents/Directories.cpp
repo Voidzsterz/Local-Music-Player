@@ -27,19 +27,24 @@ void Directories::render()
   ImGui::Button("Remove");
   ImGui::SameLine();
 
-  // temporary method for centering the "Mangage directories here" text
-  // manageDirWidth gets the buttons "width" before it is created
-  float manageDirWidth = ImGui::CalcTextSize("Manage directories here").x + ImGui::GetStyle().FramePadding.x * 2; 
-  ImGui::SetCursorPosX((ImGui::GetWindowWidth() / 2) - (manageDirWidth / 2));
-  ImGui::Text("Manage directories here");
-  ImGui::SameLine();
+  // The "5.0f"s you'll see throughout the code from now on refers to the padding that was pushed in renderContents()
+  // I should create a variable for clarity but for now I'll leave it like this
 
+  // manageDirWidth gets the buttons "width" before it is created
+  float manageDirWidth = ImGui::CalcTextSize("Manage directories here").x;
   // clearButtonWidth gets the buttons "width" before it is created
   float clearButtonWidth = ImGui::CalcTextSize("Clear all Directories").x + ImGui::GetStyle().FramePadding.x * 2; 
 
-  // "5.0f" refers to the padding that was pushed in renderContents(), I should create a variable for clarity but for now I'll leave it like this
-  ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - 5.0f);
+  // The code below calculates where to place the "Manage directories here" text (i love working on random useless things)
+  float clearButtonStart = ImGui::GetWindowWidth() - clearButtonWidth - 5.0f;
+  // CursorPosX stays the same even after creating the "Remove" button, so we can do this
+  float centerPos = (ImGui::GetCursorPosX() + clearButtonStart) / 2.0f - (manageDirWidth / 2.0f);
 
+  ImGui::SetCursorPosX(centerPos);
+  ImGui::Text("Manage directories here");
+  ImGui::SameLine();
+
+  ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - 5.0f);
   ImGui::Button("Clear all Directories");
   ImGui::PopStyleColor(3);
 
