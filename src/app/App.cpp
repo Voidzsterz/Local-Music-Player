@@ -48,6 +48,7 @@ void App::init()
         glfwTerminate();
         return;
     }
+    glfwSetWindowSizeLimits(m_window, 600, 400, GLFW_DONT_CARE, GLFW_DONT_CARE);
     glfwMakeContextCurrent(m_window);
     std::cout << "GLFW window created" << std::endl;
 
