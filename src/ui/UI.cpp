@@ -46,6 +46,22 @@ void UI::renderSidebar()
 
 void UI::renderContents()
 {
+  ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+  ImGui::SetNextWindowPos(ImVec2(viewport->WorkPos.x + 200.0f, 0));
+  ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x - 200.0f,viewport->WorkSize.y - 200.0f /*PLAYIING_HEIGHT*/));
+
+  ImGuiWindowFlags flags =
+    ImGuiWindowFlags_NoTitleBar |
+    ImGuiWindowFlags_NoResize |
+    ImGuiWindowFlags_NoMove |
+    ImGuiWindowFlags_NoCollapse;
+
+
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+  ImGui::Begin("Contents", nullptr, flags);
+  ImGui::PopStyleVar();
+
   switch (m_activeTab)
   {
       case ActiveTab::Home:
@@ -65,12 +81,13 @@ void UI::renderContents()
           // draw settings
           break;
   }
+  ImGui::End();
 }
 
 void UI::renderPlaying()
 {
   ImGuiViewport* viewport = ImGui::GetMainViewport();
-  
+
   ImGui::SetNextWindowPos(ImVec2(viewport->WorkPos.x + 200.0f, viewport->WorkSize.y - 200));
   ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x - 200.0f,PLAYING_HEIGHT));
 
