@@ -75,7 +75,7 @@ void UI::renderContents()
           break;
       case ActiveTab::Directories:
           // draw directories
-          m_directories.render();
+          m_directoriesUI.render();
           break;
       case ActiveTab::Settings:
           // draw settings

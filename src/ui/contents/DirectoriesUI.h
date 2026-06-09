@@ -1,6 +1,6 @@
 #pragma once
 
-class Directories
+class DirectoriesUI
 {
 public:
     void render();

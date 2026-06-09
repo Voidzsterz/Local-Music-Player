@@ -1,6 +1,6 @@
 #pragma once
 
-#include "contents/Directories.h"
+#include "contents/DirectoriesUI.h"
 
 class UI
 {
@@ -12,7 +12,7 @@ private:
     ActiveTab m_activeTab = ActiveTab::Home;
 
     // Contents
-    Directories m_directories;
+    DirectoriesUI m_directoriesUI;
 
     void renderSidebar();
     void renderContents();

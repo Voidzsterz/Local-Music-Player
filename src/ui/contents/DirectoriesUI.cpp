@@ -1,5 +1,5 @@
 #include "imgui.h"
-#include "Directories.h"
+#include "DirectoriesUI.h"
 
 // Potentially temporary variables to store the padding created in UI.cpp's renderContents() function
 // Easier to read this way
@@ -7,7 +7,7 @@
 static const float WINDOW_PADDING = 5.0f;
 // static const float BUTTON_PADDING = 8.0f; 
 
-void Directories::render()
+void DirectoriesUI::render()
 {
   // Top buttons
   ImGui::Button("Rescan Directories");
