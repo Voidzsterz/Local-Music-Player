@@ -1,6 +1,12 @@
 #include "imgui.h"
 #include "Directories.h"
 
+// Potentially temporary variables to store the padding created in UI.cpp's renderContents() function
+// Easier to read this way
+
+static const float WINDOW_PADDING = 5.0f;
+// static const float BUTTON_PADDING = 8.0f; 
+
 void Directories::render()
 {
   // Top buttons
@@ -27,16 +33,13 @@ void Directories::render()
   ImGui::Button("Remove");
   ImGui::SameLine();
 
-  // The "5.0f"s you'll see throughout the code from now on refers to the padding that was pushed in renderContents()
-  // I should create a variable for clarity but for now I'll leave it like this
-
   // manageDirWidth gets the buttons "width" before it is created
   float manageDirWidth = ImGui::CalcTextSize("Manage directories here").x;
   // clearButtonWidth gets the buttons "width" before it is created
   float clearButtonWidth = ImGui::CalcTextSize("Clear all Directories").x + ImGui::GetStyle().FramePadding.x * 2; 
 
   // The code below calculates where to place the "Manage directories here" text (i love working on random useless things)
-  float clearButtonStart = ImGui::GetWindowWidth() - clearButtonWidth - 5.0f;
+  float clearButtonStart = ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING;
   // CursorPosX stays the same even after creating the "Remove" button, so we can do this
   float centerPos = (ImGui::GetCursorPosX() + clearButtonStart) / 2.0f - (manageDirWidth / 2.0f);
 
@@ -44,11 +47,13 @@ void Directories::render()
   ImGui::Text("Manage directories here");
   ImGui::SameLine();
 
-  ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - 5.0f);
+  ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING);
   ImGui::Button("Clear all Directories");
   ImGui::PopStyleColor(3);
 
   // Tables
+  // TODO: Potentially add functionality for multi-select using ImGui::BeginMultiSelect()
+  // Basic documentation for multi-selecting can be found here: https://github.com/ocornut/imgui/wiki/Multi-Select
   if (ImGui::BeginTable("DirectoriesTable", 1, ImGuiTableFlags_RowBg))
   {
       // Temporary tables to see how it looks
