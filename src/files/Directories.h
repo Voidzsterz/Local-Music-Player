@@ -7,7 +7,7 @@ class Directories
 {
 public:
     using Path = std::filesystem::path; // Creates a "type alias" for std::filesystem::path (nothing changes, just easier for me to read)
-    const std::vector<Path>& view() const { return m_directories; } // Essentially returns a read-only REFERENCE to the directories array
+    const std::vector<Path>& getDirectories() const { return m_directories; } // Essentially returns a read-only REFERENCE to the directories array
 
     void promptDirectorySelect(); // Long/confusing name, might change
     void addDirectory(const std::string& path);
