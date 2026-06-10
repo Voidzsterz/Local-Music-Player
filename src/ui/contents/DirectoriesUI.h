@@ -5,7 +5,8 @@
 class DirectoriesUI
 {
 public:
+    DirectoriesUI(Directories& directories);
     void render();
 private:
-    Directories m_directories;
+    Directories& m_directories;
 };

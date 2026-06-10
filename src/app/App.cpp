@@ -4,7 +4,6 @@
 
 #include "App.h"
 #include "../renderer/Renderer.h"
-
 /*
 Constructor "App::App()"
 App::App() is called automatically when App is created (App x;)
@@ -22,8 +21,8 @@ They must be manually deleted through the "delete" method
 
 // This constructor in particular uses initalizer lists, documentation for that can be found in Renderer.cpp
 
-App::App(int width, int height) // Constructor
-    : m_windowWidth(width), m_windowHeight(height)
+App::App(int width, int height)
+    : m_windowWidth(width), m_windowHeight(height), m_ui(m_directories)
 { init(); }
 
 App::~App() { shutdown(); } // Destructor

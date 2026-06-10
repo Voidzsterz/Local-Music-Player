@@ -5,6 +5,10 @@
 static const float SIDEBAR_WIDTH  = 200.0f;
 static const float PLAYING_HEIGHT = 200.0f;
 
+UI::UI(Directories& directories)
+    : m_directories(directories), m_directoriesUI(directories)
+{}
+
 void UI::render()
 {
     renderDockspace();

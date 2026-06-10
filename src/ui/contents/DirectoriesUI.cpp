@@ -5,6 +5,10 @@
 // Easier to read this way
 static const float WINDOW_PADDING = 5.0f;
 
+DirectoriesUI::DirectoriesUI(Directories& directories)
+    : m_directories(directories)
+{}
+
 void DirectoriesUI::render()
 {
     // These statics are used for the ImGui selection
