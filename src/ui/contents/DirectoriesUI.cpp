@@ -11,18 +11,12 @@ DirectoriesUI::DirectoriesUI(Directories& directories)
 
 void DirectoriesUI::render()
 {
-    // These statics are used for the ImGui selection
-    static ImGuiSelectionBasicStorage selection;
-    static std::vector<DirectoryItem> items;
+    renderTopButtons();
+    renderTable();
+}
 
-    // Get directories
-    const std::vector<std::filesystem::path>& directoryList = m_directories.getDirectories();
-
-    // Top buttons
-    // ImGui::Button("Rescan Directories");
-
-    //ImGui::SameLine();
-
+void DirectoriesUI::renderTopButtons()
+{
     // Push green button style
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5.0f,0));
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));
@@ -34,7 +28,7 @@ void DirectoriesUI::render()
     {
         // For now temporarily, use the test directory
         m_directories.promptDirectorySelect();
-        items.clear(); // Clear items so they repopulate (refresh) next frame
+        m_items.clear(); // Clear items so they repopulate (refresh) next frame
     }
     ImGui::PopStyleColor(3);
 
@@ -47,17 +41,15 @@ void DirectoriesUI::render()
 
     if (ImGui::Button("Remove"))
     {
-        for (const auto& item : items)
+        for (const auto& item : m_items)
         {
-            if (selection.Contains(item.ID))
+            if (m_selection.Contains(item.ID))
             {
                 m_directories.removeDirectory(item.path);
             }
         }
-        items.clear(); // Clear items so they repopulate (refresh) next frame
+        m_items.clear(); // Clear items so they repopulate (refresh) next frame
     }
-
-    //ImGui::PopStyleVar();
 
     ImGui::SameLine();
 
@@ -79,53 +71,57 @@ void DirectoriesUI::render()
     ImGui::SameLine();
 
     ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING);
-
     if (ImGui::Button("Clear Directories"))
     {
         m_directories.clearDirectories();
-        items.clear(); // Clear items so they repopulate (refresh) next frame
+        m_items.clear(); // Clear items so they repopulate (refresh) next frame
     }
 
     ImGui::PopStyleColor(3);
     ImGui::PopStyleVar();
+}
 
-    // Tables
+void DirectoriesUI::renderTable()
+{
     // Basic documentation for multi-selecting can be found here: https://github.com/ocornut/imgui/wiki/Multi-Select
+    const std::vector<std::filesystem::path>& directoryList = m_directories.getDirectories();
 
     // Gives a unique ID to each directory in the list
-    if (items.empty())
+    if (m_items.empty())
     {
         ImGuiID id = 0;
         for (const auto& dir : directoryList)
         {
-            items.push_back({id++, dir.string()});
+            m_items.push_back({id++, dir.string()});
         }
     }
 
-    selection.UserData = (void*)&items;
-    selection.AdapterIndexToStorageId = [](ImGuiSelectionBasicStorage* self, int index)
+    m_selection.UserData = (void*)&m_items;
+    m_selection.AdapterIndexToStorageId = [](ImGuiSelectionBasicStorage* self, int index)
     {
         auto* item_array = static_cast<std::vector<DirectoryItem>*>(self->UserData);
         return (*item_array)[index].ID;
     };
 
-    ImGuiMultiSelectIO* multiSelectIO = ImGui::BeginMultiSelect(ImGuiMultiSelectFlags_None, selection.Size, items.size());
-    selection.ApplyRequests(multiSelectIO);
+    // Begin multi-select
+    ImGuiMultiSelectIO* multiSelectIO = ImGui::BeginMultiSelect(ImGuiMultiSelectFlags_None, m_selection.Size, m_items.size());
+    m_selection.ApplyRequests(multiSelectIO);
     
+    // Creation of the table
     if (ImGui::BeginTable("DirectoriesTable", 1, ImGuiTableFlags_RowBg))
     {
-        for (int index = 0; index < items.size(); index++)
+        for (int index = 0; index < m_items.size(); index++)
         {
-            bool item_is_selected = selection.Contains(items[index].ID);
+            bool item_is_selected = m_selection.Contains(m_items[index].ID);
             ImGui::SetNextItemSelectionUserData(index);
             
             ImGui::TableNextRow();
             ImGui::TableSetColumnIndex(0);
-            ImGui::Selectable(items[index].path.c_str(), item_is_selected);
+            ImGui::Selectable(m_items[index].path.c_str(), item_is_selected);
         }
         ImGui::EndTable();
     }
 
     multiSelectIO = ImGui::EndMultiSelect();
-    selection.ApplyRequests(multiSelectIO);
+    m_selection.ApplyRequests(multiSelectIO);
 }
