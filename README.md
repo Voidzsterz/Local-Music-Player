@@ -21,3 +21,4 @@ CMakeLists.txt is provided. The following libraries are required:
 - ImGui
 - miniaudio (single header)
 - stb_image (single header)
+- portable-file-dialogs (single header)

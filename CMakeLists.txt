@@ -37,6 +37,7 @@ target_include_directories(music PRIVATE
     libs/stb
     libs/miniaudio
     libs/glad/include
+    libs/PFD
 )
 
 target_link_libraries(music

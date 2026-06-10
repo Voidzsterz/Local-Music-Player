@@ -1,49 +1,45 @@
 #include "filesystem"
-#include <algorithm>
 #include <iostream>
-#include <vector>
+
+#include "portable-file-dialogs.h"
 
 #include "Directories.h"
 
-void Directories::promptDirectorySelect() {
-  // This will be added later, for now "test" directories will be used for
-  // debugging (or directly inputting directories via a string maybe)
-}
+void Directories::promptDirectorySelect()
+{
+    // TODO: Make this return the selection rather than add the directory for us, making it more "independant"
+    // PFD handles this for us, great library :)
+    auto selection = pfd::select_folder("Select a Directory").result();
 
-void Directories::addDirectory(const std::string &path) {
-  std::cout << "Attempting addition of directory: " << path.c_str()
-            << std::endl;
-  if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
-    if (std::find(m_directories.begin(), m_directories.end(), path) ==
-        m_directories.end()) {
-      m_directories.push_back(path);
-      std::cout << "Successfully added directory: " << path.c_str()
-                << std::endl;
+    if (!selection.empty())
+    {
+        addDirectory(selection);
     }
-  }
 }
 
-void Directories::removeDirectory(const std::string &path) {
-  // We can simply use ".erase" for this, no need to loop through everything
-  // like in addDirectory If erase doesn't find anything, nothing happens, it
-  // works out whether the directory exists or not
-  std::cout << "Attempting removal of directory: " << path.c_str() << std::endl;
-  m_directories.erase(
-      std::remove(m_directories.begin(), m_directories.end(), path),
-      m_directories.end());
+void Directories::addDirectory(const std::string &path)
+{
+    std::cout << "Attempting addition of directory: " << path.c_str() << std::endl;
+    if (std::filesystem::exists(path) && std::filesystem::is_directory(path)) {
+        if (std::find(m_directories.begin(), m_directories.end(), path) == m_directories.end())
+        {
+          m_directories.push_back(path);
+          std::cout << "Successfully added directory: " << path.c_str()<< std::endl;
+        }
+    }
 }
 
-void Directories::removeDirectories(const std::vector<std::string> &paths) {
-  for (const auto &path : paths) {
-    std::cout << "Attempting removal of directory: " << path.c_str()
-              << std::endl;
-    m_directories.erase(
-        std::remove(m_directories.begin(), m_directories.end(), path),
-        m_directories.end());
-  }
+void Directories::removeDirectory(const std::string &path)
+{
+    // We can simply use ".erase" for this, no need to loop through everything
+    // like in addDirectory If erase doesn't find anything, nothing happens, it
+    // works out whether the directory exists or not
+    std::cout << "Attempting removal of directory: " << path.c_str() << std::endl;
+    m_directories.erase(std::remove(m_directories.begin(), m_directories.end(), path), m_directories.end());
 }
 
-void Directories::clearDirectories() {
-  std::cout << "Clearing all directories..." << std::endl;
-  m_directories.clear();
+void Directories::clearDirectories()
+{
+    std::cout << "Clearing all directories..." << std::endl;
+    m_directories.clear();
 }

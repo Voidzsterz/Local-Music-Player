@@ -3,13 +3,7 @@
 
 // Potentially temporary variables to store the padding created in UI.cpp's renderContents() function
 // Easier to read this way
-
 static const float WINDOW_PADDING = 5.0f;
-// static const float BUTTON_PADDING = 8.0f; 
-
-// TEMPORARY DEBUGGING PATH, ENTER YOUR OWN DESIRED DIRECTORY
-// This is a path on Linux, Windows would be something like "C:\\Users\\UserHere\\Music", not quite sure though
-static const std::string TEST_DIR = "/home/UserHere/Music/";
 
 void DirectoriesUI::render()
 {
@@ -34,7 +28,8 @@ void DirectoriesUI::render()
     if (ImGui::Button("Create"))
     {
         // For now temporarily, use the test directory
-        m_directories.addDirectory(TEST_DIR);
+        m_directories.promptDirectorySelect();
+        items.clear(); // Clear items so they repopulate (refresh) next frame
     }
     ImGui::PopStyleColor(3);
 
@@ -54,7 +49,7 @@ void DirectoriesUI::render()
                 m_directories.removeDirectory(item.path);
             }
         }
-        items.clear(); // Clear items so they repopulate next frame
+        items.clear(); // Clear items so they repopulate (refresh) next frame
     }
 
     ImGui::SameLine();
@@ -81,6 +76,7 @@ void DirectoriesUI::render()
     if (ImGui::Button("Clear all Directories"))
     {
         m_directories.clearDirectories();
+        items.clear(); // Clear items so they repopulate (refresh) next frame
     }
 
     ImGui::PopStyleColor(3);
