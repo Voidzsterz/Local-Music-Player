@@ -15,11 +15,12 @@ void DirectoriesUI::render()
     const std::vector<std::filesystem::path>& directoryList = m_directories.getDirectories();
 
     // Top buttons
-    ImGui::Button("Rescan Directories");
+    // ImGui::Button("Rescan Directories");
 
-    ImGui::SameLine();
+    //ImGui::SameLine();
 
     // Push green button style
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5.0f,0));
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f,0.75f,0.1f,1.0f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f,0.65f,0.1f,1.0f));
@@ -52,13 +53,15 @@ void DirectoriesUI::render()
         items.clear(); // Clear items so they repopulate (refresh) next frame
     }
 
+    //ImGui::PopStyleVar();
+
     ImGui::SameLine();
 
     // manageDirWidth gets the buttons "width" before it is created
     float manageDirWidth = ImGui::CalcTextSize("Manage directories here").x;
 
     // clearButtonWidth gets the buttons "width" before it is created
-    float clearButtonWidth = ImGui::CalcTextSize("Clear all Directories").x + ImGui::GetStyle().FramePadding.x * 2; 
+    float clearButtonWidth = ImGui::CalcTextSize("Clear Directories").x + ImGui::GetStyle().FramePadding.x * 2; 
 
     // The code below calculates where to place the "Manage directories here" text (i love working on random useless things)
     float clearButtonStart = ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING;
@@ -73,13 +76,14 @@ void DirectoriesUI::render()
 
     ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING);
 
-    if (ImGui::Button("Clear all Directories"))
+    if (ImGui::Button("Clear Directories"))
     {
         m_directories.clearDirectories();
         items.clear(); // Clear items so they repopulate (refresh) next frame
     }
 
     ImGui::PopStyleColor(3);
+    ImGui::PopStyleVar();
 
     // Tables
     // Basic documentation for multi-selecting can be found here: https://github.com/ocornut/imgui/wiki/Multi-Select
