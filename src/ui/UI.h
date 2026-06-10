@@ -1,5 +1,6 @@
 #pragma once
 
+#include "contents/SongsUI.h"
 #include "contents/DirectoriesUI.h"
 
 class UI
@@ -16,6 +17,7 @@ private:
     Directories& m_directories;
 
     // Contents
+    SongsUI m_songsUI;
     DirectoriesUI m_directoriesUI;
 
     void renderSidebar();
