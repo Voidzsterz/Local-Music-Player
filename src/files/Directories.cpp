@@ -43,3 +43,30 @@ void Directories::clearDirectories()
     std::cout << "Clearing all directories..." << std::endl;
     m_directories.clear();
 }
+
+PathNode Directories::scanPath(const std::filesystem::path& path) const
+{
+    // Recursive function, calls itself for each "child"
+    PathNode node;
+    node.name = path.filename().string();
+    node.fullPath = path;
+    node.isDirectory = std::filesystem::is_directory(path);
+
+    if (node.isDirectory)
+    {
+        for (const auto& entry : std::filesystem::directory_iterator(path))
+        {
+            // This will create recursion in the function, eventually it will find every "child" of path following this procedure
+            node.children.push_back(scanPath(entry.path()));
+        }
+    }
+
+    return node;
+}
+
+bool Directories::isSupportedFormat(const std::string& path) const
+{
+    std::string extension = std::filesystem::path(path).extension().string();
+    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+    return extension == ".mp3" || extension == ".wav" || extension == ".flac";
+}
