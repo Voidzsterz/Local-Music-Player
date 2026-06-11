@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h>
@@ -8,6 +9,9 @@
 
 #include "Renderer.h"
 #include "../ui/UI.h"
+
+ImFont* Renderer::font_soraBold13 = nullptr;
+ImFont* Renderer::font_soraExtraLight20 = nullptr;
 
 /*
 Initalizer lists runs before the constructor body
@@ -47,10 +51,13 @@ bool Renderer::init()
     // ImGui configuration
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.Fonts->AddFontFromFileTTF("assets/fonts/sora/Sora-Bold.ttf", 13.0f); // 13.0f is the size of the default ImGui font I believe
+
+    // 13.0f is the size of the default ImGui font I believe
+    font_soraBold13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Bold.ttf", 13.0f);
+    font_soraExtraLight20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-ExtraLight.ttf", 20.0f);
 
     ImGui::StyleColorsDark();
-
+ 
     ImGuiStyle& style = ImGui::GetStyle();
     ImVec4* colors = style.Colors;
 

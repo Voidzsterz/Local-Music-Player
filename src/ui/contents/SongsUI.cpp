@@ -1,6 +1,8 @@
 #include "imgui.h"
 #include "SongsUI.h"
-#include <iostream>
+
+// Only include renderer to get fonts, not proud of it but I think its acceptable
+#include "../../renderer/Renderer.h"
 
 // Potentially temporary variables to store the padding created in UI.cpp's renderContents() function
 // Easier to read this way
@@ -13,6 +15,25 @@ SongsUI::SongsUI(Directories& directories)
 void SongsUI::render()
 {
     renderTopbar();
+
+    if (m_directories.getDirectories().empty())
+    {
+        ImGui::PushFont(Renderer::font_soraExtraLight20);
+        const char* noDirectoriesMsg = "No directories added. Add one in the Directories tab.";
+        ImVec2 textSize = ImGui::CalcTextSize(noDirectoriesMsg);
+        ImVec2 windowSize = ImGui::GetWindowSize();
+
+        ImGui::SetCursorPos(ImVec2
+        (
+            (windowSize.x - textSize.x) / 2.0f,
+            (windowSize.y - textSize.y) / 2.0f
+        ));
+        
+        ImGui::Text("%s", noDirectoriesMsg);
+        ImGui:ImGui::PopFont();
+
+        return;
+    }
 
     // Genuinely sorry if this part of the code specifically with the "needs rescan" stuff is confusing, I'll try my best to clean it up soon enough
     if (m_directories.needsRescan())

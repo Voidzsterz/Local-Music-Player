@@ -54,10 +54,12 @@ void DirectoriesUI::renderTopbar()
     ImGui::SameLine();
 
     // manageDirWidth gets the buttons "width" before it is created
-    float manageDirWidth = ImGui::CalcTextSize("Manage directories here").x;
+    const char* manageDirMsg = "Manage directories here";
+    float manageDirWidth = ImGui::CalcTextSize(manageDirMsg).x;
 
     // clearButtonWidth gets the buttons "width" before it is created
-    float clearButtonWidth = ImGui::CalcTextSize("Clear Directories").x + ImGui::GetStyle().FramePadding.x * 2; 
+    const char* clearDirsMsg = "Clear Directories";
+    float clearButtonWidth = ImGui::CalcTextSize(clearDirsMsg).x + ImGui::GetStyle().FramePadding.x * 2; 
 
     // The code below calculates where to place the "Manage directories here" text (i love working on random useless things)
     float clearButtonStart = ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING;
@@ -66,12 +68,12 @@ void DirectoriesUI::renderTopbar()
     float centerPos = (ImGui::GetCursorPosX() + clearButtonStart) / 2.0f - (manageDirWidth / 2.0f);
 
     ImGui::SetCursorPosX(centerPos);
-    ImGui::Text("Manage directories here");
+    ImGui::Text("%s", manageDirMsg);
 
     ImGui::SameLine();
 
     ImGui::SetCursorPosX(ImGui::GetWindowWidth() - clearButtonWidth - WINDOW_PADDING);
-    if (ImGui::Button("Clear Directories"))
+    if (ImGui::Button(clearDirsMsg))
     {
         m_directories.clearDirectories();
         m_items.clear(); // Clear items so they repopulate (refresh) next frame

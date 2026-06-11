@@ -33,8 +33,8 @@ void Directories::addDirectory(const std::string &path)
 void Directories::removeDirectory(const std::string &path)
 {
     // We can simply use ".erase" for this, no need to loop through everything
-    // like in addDirectory If erase doesn't find anything, nothing happens, it
-    // works out whether the directory exists or not
+    // like in addDirectory If erase doesn't find anything, nothing happens
+    // It works out whether the directory exists or not
     std::cout << "Attempting removal of directory: " << path.c_str() << std::endl;
     m_directories.erase(std::remove(m_directories.begin(), m_directories.end(), path), m_directories.end());
     m_needsRescan = true;
