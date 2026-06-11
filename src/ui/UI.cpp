@@ -13,19 +13,25 @@ static const float PLAYING_HEIGHT = 200.0f;
 
 UI::UI(Directories& directories)
     : m_directories(directories), m_songsUI(directories), m_directoriesUI(directories)
-{} // basically a init
+{}
 
 UI::~UI()
 {
     
     glDeleteTextures(1, &m_homeIcon);
-    //glDeleteTextures(1, &m_songsIcon);
+    glDeleteTextures(1, &m_songsIcon);
+    glDeleteTextures(1, &m_libraryIcon);
+    glDeleteTextures(1, &m_directoriesIcon);
+    glDeleteTextures(1, &m_settingsIcon);
 }
 
 void UI::createTextures() // Called in App.cpp after the renderer is initiated, not very clean but good enough for now
 {
     m_homeIcon = loadTexture("assets/images/home.png");
-    //m_songsIcon = loadTexture("assets/images/audio-lines.png");
+    m_songsIcon = loadTexture("assets/images/audio-lines.png");
+    m_libraryIcon = loadTexture("assets/images/library-big.png");
+    m_directoriesIcon = loadTexture("assets/images/folder-open.png");
+    m_settingsIcon = loadTexture("assets/images/settings.png");
 }
 
 void UI::render()
@@ -54,21 +60,53 @@ void UI::renderSidebar()
   ImGui::Begin("Sidebar", nullptr, flags);
     
   ImGui::BeginChild("##sidebar", ImVec2(200, 0), true);
-      //if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
+      // Variable to adjust selectable size
+      float SELECTABLE_SIZE = 24.0f;
+      // Variable to adjust how much to offset the icons to the right by
+      float ICON_OFFSET = 7.5f;
 
-      // Temporary test draw for home icon
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20.0f); // leave room for icon
-      if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home))
+      // Home Selectable
+      if (ImGui::Selectable("##Home", m_activeTab == ActiveTab::Home,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
           m_activeTab = ActiveTab::Home;
-      ImGui::SameLine(8.0f); // go back and draw icon, i dont even know tbh
-      ImGui::Image((ImTextureID)(uintptr_t)m_homeIcon, ImVec2(16, 16));
+      ImGui::SameLine(ICON_OFFSET);
+      ImGui::Image((ImTextureID)(uintptr_t)m_homeIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+      ImGui::SameLine();
+      ImGui::Text("Home");
 
-      if (ImGui::Selectable("Songs", m_activeTab == ActiveTab::Songs)) m_activeTab = ActiveTab::Songs;
-      if (ImGui::Selectable("Library", m_activeTab == ActiveTab::Library)) m_activeTab = ActiveTab::Library;
-      if (ImGui::Selectable("Directories", m_activeTab == ActiveTab::Directories)) m_activeTab = ActiveTab::Directories;
+      // Songs Selectable
+      if (ImGui::Selectable("##Songs", m_activeTab == ActiveTab::Songs,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
+          m_activeTab = ActiveTab::Songs;
+      ImGui::SameLine(ICON_OFFSET);
+      ImGui::Image((ImTextureID)(uintptr_t)m_songsIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+      ImGui::SameLine();
+      ImGui::Text("Songs");
 
-      ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 24);
-      if (ImGui::Selectable("Settings", m_activeTab == ActiveTab::Settings)) m_activeTab = ActiveTab::Settings;
+      // Library Selectable
+      if (ImGui::Selectable("##Library", m_activeTab == ActiveTab::Library,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
+          m_activeTab = ActiveTab::Library;
+      ImGui::SameLine(ICON_OFFSET);
+      ImGui::Image((ImTextureID)(uintptr_t)m_libraryIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+      ImGui::SameLine();
+      ImGui::Text("Library");
+
+      // Library Selectable
+      if (ImGui::Selectable("##Directories", m_activeTab == ActiveTab::Directories,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
+          m_activeTab = ActiveTab::Directories;
+      ImGui::SameLine(ICON_OFFSET);
+      ImGui::Image((ImTextureID)(uintptr_t)m_directoriesIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+      ImGui::SameLine();
+      ImGui::Text("Directories");
+      
+
+      ImGui::SetCursorPosY(ImGui::GetWindowHeight() - SELECTABLE_SIZE); // Personally think it looks a little weird this way but whatever
+ 
+      if (ImGui::Selectable("##Settings", m_activeTab == ActiveTab::Settings,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
+          m_activeTab = ActiveTab::Settings;
+      ImGui::SameLine(ICON_OFFSET);
+      ImGui::Image((ImTextureID)(uintptr_t)m_settingsIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+      ImGui::SameLine();
+      ImGui::Text("Settings");
+
   ImGui::EndChild();
 
   ImGui::PopStyleVar();  
