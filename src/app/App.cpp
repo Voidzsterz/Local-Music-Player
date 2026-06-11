@@ -53,6 +53,7 @@ void App::init()
 
     // Renderer initalization
     m_renderer = new Renderer(m_window);
+    m_ui.createTextures();
 }
 
 void App::run()

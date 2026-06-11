@@ -1,13 +1,32 @@
 #include <imgui.h>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "UI.h"
+#include "../image/Image.h"
+
+#include <iostream>
 
 static const float SIDEBAR_WIDTH  = 200.0f;
 static const float PLAYING_HEIGHT = 200.0f;
 
 UI::UI(Directories& directories)
     : m_directories(directories), m_songsUI(directories), m_directoriesUI(directories)
-{}
+{} // basically a init
+
+UI::~UI()
+{
+    
+    glDeleteTextures(1, &m_homeIcon);
+    //glDeleteTextures(1, &m_songsIcon);
+}
+
+void UI::createTextures() // Called in App.cpp after the renderer is initiated, not very clean but good enough for now
+{
+    m_homeIcon = loadTexture("assets/images/home.png");
+    //m_songsIcon = loadTexture("assets/images/audio-lines.png");
+}
 
 void UI::render()
 {
@@ -35,7 +54,15 @@ void UI::renderSidebar()
   ImGui::Begin("Sidebar", nullptr, flags);
     
   ImGui::BeginChild("##sidebar", ImVec2(200, 0), true);
-      if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
+      //if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home)) m_activeTab = ActiveTab::Home;
+
+      // Temporary test draw for home icon
+      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20.0f); // leave room for icon
+      if (ImGui::Selectable("Home", m_activeTab == ActiveTab::Home))
+          m_activeTab = ActiveTab::Home;
+      ImGui::SameLine(8.0f); // go back and draw icon, i dont even know tbh
+      ImGui::Image((ImTextureID)(uintptr_t)m_homeIcon, ImVec2(16, 16));
+
       if (ImGui::Selectable("Songs", m_activeTab == ActiveTab::Songs)) m_activeTab = ActiveTab::Songs;
       if (ImGui::Selectable("Library", m_activeTab == ActiveTab::Library)) m_activeTab = ActiveTab::Library;
       if (ImGui::Selectable("Directories", m_activeTab == ActiveTab::Directories)) m_activeTab = ActiveTab::Directories;

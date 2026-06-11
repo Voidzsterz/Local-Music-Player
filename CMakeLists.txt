@@ -47,3 +47,9 @@ target_link_libraries(music
     $<$<PLATFORM_ID:Linux>:dl>
     $<$<PLATFORM_ID:Linux>:pthread>
 )
+
+add_custom_command(TARGET music POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    ${CMAKE_BINARY_DIR}/assets
+)
