@@ -11,11 +11,11 @@ DirectoriesUI::DirectoriesUI(Directories& directories)
 
 void DirectoriesUI::render()
 {
-    renderTopButtons();
+    renderTopbar();
     renderTable();
 }
 
-void DirectoriesUI::renderTopButtons()
+void DirectoriesUI::renderTopbar()
 {
     // Push green button style
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5.0f,0));

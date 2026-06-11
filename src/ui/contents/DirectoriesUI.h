@@ -13,6 +13,6 @@ private:
     ImGuiSelectionBasicStorage m_selection;
     std::vector<DirectoryItem> m_items;
 
-    void renderTopButtons();
+    void renderTopbar();
     void renderTable();
 };

@@ -31,8 +31,14 @@ public:
     void removeDirectories(const std::vector<std::string>& paths);
     void clearDirectories();
 
+    bool needsRescan() const;
+    void clearRescan();
+
     PathNode scanPath(const std::filesystem::path& path) const;
 private:
+    // Set to true whenever directories list changes, otherwise SongsUI will not update
+    bool m_needsRescan = false;
+
     // Vector array containing all directories
     std::vector<Path> m_directories;
 
