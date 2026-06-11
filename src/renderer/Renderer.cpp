@@ -47,6 +47,7 @@ bool Renderer::init()
     // ImGui configuration
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.Fonts->AddFontFromFileTTF("assets/fonts/sora/Sora-Bold.ttf", 13.0f); // 13.0f is the size of the default ImGui font I believe
 
     ImGui::StyleColorsDark();
 

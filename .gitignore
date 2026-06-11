@@ -33,5 +33,5 @@ libs/
 *.log
 
 # Personal
-notes/
+ignore/
 .directory/

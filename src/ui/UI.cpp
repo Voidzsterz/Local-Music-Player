@@ -100,6 +100,7 @@ void UI::renderSidebar()
 
       ImGui::SetCursorPosY(ImGui::GetWindowHeight() - SELECTABLE_SIZE); // Personally think it looks a little weird this way but whatever
  
+      // Settings Selectable
       if (ImGui::Selectable("##Settings", m_activeTab == ActiveTab::Settings,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
           m_activeTab = ActiveTab::Settings;
       ImGui::SameLine(ICON_OFFSET);
