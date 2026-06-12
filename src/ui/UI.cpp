@@ -18,22 +18,27 @@ UI::UI(Directories& directories)
 {}
 
 UI::~UI()
-{
-    
-    glDeleteTextures(1, &m_homeIcon);
-    glDeleteTextures(1, &m_songsIcon);
-    glDeleteTextures(1, &m_libraryIcon);
-    glDeleteTextures(1, &m_directoriesIcon);
-    glDeleteTextures(1, &m_settingsIcon);
+{ 
+    glDeleteTextures(1, &icon_home);
+    glDeleteTextures(1, &icon_songs);
+    glDeleteTextures(1, &icon_library);
+    glDeleteTextures(1, &icon_directories);
+    glDeleteTextures(1, &icon_settings);
+
+    glDeleteTextures(1, &icon_folder);
+    glDeleteTextures(1, &icon_musicFile);
 }
 
 void UI::createTextures() // Called in App.cpp after the renderer is initiated, not very clean but good enough for now
 {
-    m_homeIcon = loadTexture("assets/images/home.png");
-    m_songsIcon = loadTexture("assets/images/audio-lines.png");
-    m_libraryIcon = loadTexture("assets/images/library-big.png");
-    m_directoriesIcon = loadTexture("assets/images/folder-open.png");
-    m_settingsIcon = loadTexture("assets/images/settings.png");
+    icon_home = loadTexture("assets/images/home.png");
+    icon_songs = loadTexture("assets/images/audio-lines.png");
+    icon_library = loadTexture("assets/images/library-big.png");
+    icon_directories = loadTexture("assets/images/folder-open.png");
+    icon_settings = loadTexture("assets/images/settings.png");
+
+    icon_folder = loadTexture("assets/images/folder.png");
+    icon_musicFile = loadTexture("assets/images/file-music.png");
 }
 
 void UI::render()
@@ -71,7 +76,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Home", m_activeTab == ActiveTab::Home,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Home;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)m_homeIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)icon_home, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Home");
 
@@ -79,7 +84,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Songs", m_activeTab == ActiveTab::Songs,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Songs;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)m_songsIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)icon_songs, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Songs");
 
@@ -87,7 +92,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Library", m_activeTab == ActiveTab::Library,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Library;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)m_libraryIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)icon_library, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Library");
 
@@ -95,7 +100,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Directories", m_activeTab == ActiveTab::Directories,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Directories;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)m_directoriesIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)icon_directories, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Directories");
         
@@ -106,7 +111,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Settings", m_activeTab == ActiveTab::Settings,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Settings;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)m_settingsIcon, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)icon_settings, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Settings");
 

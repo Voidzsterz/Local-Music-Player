@@ -19,11 +19,14 @@ private:
     Directories& m_directories;
 
     // Images (Texture IDs)
-    unsigned int m_homeIcon = 0;
-    unsigned int m_songsIcon = 0;
-    unsigned int m_libraryIcon = 0;
-    unsigned int m_directoriesIcon = 0;
-    unsigned int m_settingsIcon = 0;
+    unsigned int icon_home = 0;
+    unsigned int icon_songs = 0;
+    unsigned int icon_library = 0;
+    unsigned int icon_directories = 0;
+    unsigned int icon_settings = 0;
+
+    unsigned int icon_folder = 0;
+    unsigned int icon_musicFile = 0;
 
     // Contents
     SongsUI m_songsUI;
