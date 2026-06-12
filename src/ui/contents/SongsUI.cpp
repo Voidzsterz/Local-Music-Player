@@ -67,20 +67,24 @@ void SongsUI::renderTree(const PathNode& node)
     // Variable to adjust how much to offset the icons to the right by
     float ICON_OFFSET = 7.5f;
 
-    ImGui::PushFont(m_renderer.font_soraBold20);
     if (node.isDirectory)
     {
+        ImGui::PushFont(m_renderer.font_soraLight20);
         if (ImGui::TreeNode(node.name.c_str()))
         {
             for (const auto& child : node.children)
             renderTree(child);
             ImGui::TreePop();
         }
+        ImGui::PopFont();
     }
     else
     {
+        ImGui::PushFont(m_renderer.font_soraBold20);
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_musicFile, ImVec2(NODE_HEIGHT,NODE_HEIGHT));
+        ImGui::SameLine();
         // "%s" prevents it from being a securiy risk, since it'll treat it as a plain string
         ImGui::Text("%s", node.name.c_str());
+        ImGui::PopFont();
     }
-    ImGui::PopFont();
 }
