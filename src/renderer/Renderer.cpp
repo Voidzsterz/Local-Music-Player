@@ -12,6 +12,11 @@
 // Fonts
 ImFont* Renderer::font_soraBold13 = nullptr;
 ImFont* Renderer::font_soraBold20 = nullptr;
+ImFont* Renderer::font_soraMedium13 = nullptr;
+ImFont* Renderer::font_soraMedium20 = nullptr;
+ImFont* Renderer::font_soraLight13 = nullptr;
+ImFont* Renderer::font_soraLight20 = nullptr;
+ImFont* Renderer::font_soraExtraLight13 = nullptr;
 ImFont* Renderer::font_soraExtraLight20 = nullptr;
 
 // Icons
@@ -76,6 +81,11 @@ bool Renderer::init()
     // 13.0f is the size of the default ImGui font I believe
     font_soraBold13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Bold.ttf", 13.0f);
     font_soraBold20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Bold.ttf", 20.0f);
+    font_soraMedium13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Medium.ttf", 13.0f);
+    font_soraMedium20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Medium.ttf", 20.0f);
+    font_soraLight13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Light.ttf", 13.0f);
+    font_soraLight20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Light.ttf", 20.0f);
+    font_soraExtraLight13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-ExtraLight.ttf", 13.0f);
     font_soraExtraLight20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-ExtraLight.ttf", 20.0f);
 
     ImGui::StyleColorsDark();

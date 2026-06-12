@@ -19,9 +19,14 @@ public:
     
     // Fonts
     // Numbers at the equals the size of the font
-    static ImFont* font_soraBold13; // 13px, Sora, Bold (Standard font, used pretty much everywhere)
+    static ImFont* font_soraBold13; // 13px, Sora, Bold
     static ImFont* font_soraBold20; // 20px, Sora, Bold
-    static ImFont* font_soraExtraLight20; // 13px, Sora, Extra Light Bold
+    static ImFont* font_soraMedium13; // 13px, Sora, Medium
+    static ImFont* font_soraMedium20; // 20px, Sora, Medium
+    static ImFont* font_soraLight13; // 13px, Sora, Light
+    static ImFont* font_soraLight20; // 20px, Sora, Light
+    static ImFont* font_soraExtraLight13; // 13px, Sora, Extra Light Bold
+    static ImFont* font_soraExtraLight20; // 20px, Sora, Extra Light Bold
 
     // Icons
     static unsigned int icon_home;
