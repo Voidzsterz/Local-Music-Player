@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h>
@@ -8,10 +7,22 @@
 #include <iostream>
 
 #include "Renderer.h"
-#include "../ui/UI.h"
+#include "../image/Image.h"
 
+// Fonts
 ImFont* Renderer::font_soraBold13 = nullptr;
+ImFont* Renderer::font_soraBold20 = nullptr;
 ImFont* Renderer::font_soraExtraLight20 = nullptr;
+
+// Icons
+unsigned int Renderer::icon_home = 0;
+unsigned int Renderer::icon_songs = 0;
+unsigned int Renderer::icon_library = 0;
+unsigned int Renderer::icon_directories = 0;
+unsigned int Renderer::icon_settings = 0;
+
+unsigned int Renderer::icon_folder = 0;
+unsigned int Renderer::icon_musicFile = 0;
 
 /*
 Initalizer lists runs before the constructor body
@@ -48,12 +59,23 @@ bool Renderer::init()
 
     std::cout << "ImGui Initalized" << std::endl;
 
+    // Texture IDs
+    icon_home = loadTexture("assets/images/home.png");
+    icon_songs = loadTexture("assets/images/audio-lines.png");
+    icon_library = loadTexture("assets/images/library-big.png");
+    icon_directories = loadTexture("assets/images/folder-open.png");
+    icon_settings = loadTexture("assets/images/settings.png");
+
+    icon_folder = loadTexture("assets/images/folder.png");
+    icon_musicFile = loadTexture("assets/images/file-music.png");
+
     // ImGui configuration
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     // 13.0f is the size of the default ImGui font I believe
     font_soraBold13 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Bold.ttf", 13.0f);
+    font_soraBold20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-Bold.ttf", 20.0f);
     font_soraExtraLight20 = io.Fonts->AddFontFromFileTTF("assets/fonts/Sora-ExtraLight.ttf", 20.0f);
 
     ImGui::StyleColorsDark();
@@ -92,6 +114,16 @@ void Renderer::presentFrame()
 void Renderer::shutdown()
 {
     std::cout << "Shutting down Renderer..." << std::endl;
+
+    glDeleteTextures(1, &icon_home);
+    glDeleteTextures(1, &icon_songs);
+    glDeleteTextures(1, &icon_library);
+    glDeleteTextures(1, &icon_directories);
+    glDeleteTextures(1, &icon_settings);
+
+    glDeleteTextures(1, &icon_folder);
+    glDeleteTextures(1, &icon_musicFile);
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

@@ -4,42 +4,19 @@
 #include <GLFW/glfw3.h>
 
 #include "UI.h"
-#include "../image/Image.h"
 
-// Only include renderer to get fonts, not proud of it but I think its acceptable
+// Only include renderer to get fonts and Texture IDs, not proud of it but I think its acceptable
 // Unlike SongsUI, I'll most likely be passing this into App.cpp sooner or later, for now its just to see how it'd look
 #include "../renderer/Renderer.h"
 
 static const float SIDEBAR_WIDTH  = 200.0f;
 static const float PLAYING_HEIGHT = 200.0f;
 
-UI::UI(Directories& directories)
-    : m_directories(directories), m_songsUI(directories), m_directoriesUI(directories)
+UI::UI(Renderer& renderer, Directories& directories)
+    : m_renderer(renderer), m_directories(directories), 
+      m_songsUI(renderer, directories), 
+      m_directoriesUI(renderer, directories)
 {}
-
-UI::~UI()
-{ 
-    glDeleteTextures(1, &icon_home);
-    glDeleteTextures(1, &icon_songs);
-    glDeleteTextures(1, &icon_library);
-    glDeleteTextures(1, &icon_directories);
-    glDeleteTextures(1, &icon_settings);
-
-    glDeleteTextures(1, &icon_folder);
-    glDeleteTextures(1, &icon_musicFile);
-}
-
-void UI::createTextures() // Called in App.cpp after the renderer is initiated, not very clean but good enough for now
-{
-    icon_home = loadTexture("assets/images/home.png");
-    icon_songs = loadTexture("assets/images/audio-lines.png");
-    icon_library = loadTexture("assets/images/library-big.png");
-    icon_directories = loadTexture("assets/images/folder-open.png");
-    icon_settings = loadTexture("assets/images/settings.png");
-
-    icon_folder = loadTexture("assets/images/folder.png");
-    icon_musicFile = loadTexture("assets/images/file-music.png");
-}
 
 void UI::render()
 {
@@ -76,7 +53,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Home", m_activeTab == ActiveTab::Home,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Home;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)icon_home, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_home, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Home");
 
@@ -84,7 +61,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Songs", m_activeTab == ActiveTab::Songs,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Songs;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)icon_songs, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_songs, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Songs");
 
@@ -92,7 +69,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Library", m_activeTab == ActiveTab::Library,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Library;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)icon_library, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_library, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Library");
 
@@ -100,7 +77,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Directories", m_activeTab == ActiveTab::Directories,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Directories;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)icon_directories, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_directories, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Directories");
         
@@ -111,7 +88,7 @@ void UI::renderSidebar()
         if (ImGui::Selectable("##Settings", m_activeTab == ActiveTab::Settings,ImGuiWindowFlags_None,ImVec2(0,SELECTABLE_SIZE)))
             m_activeTab = ActiveTab::Settings;
         ImGui::SameLine(ICON_OFFSET);
-        ImGui::Image((ImTextureID)(uintptr_t)icon_settings, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
+        ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_settings, ImVec2(SELECTABLE_SIZE, SELECTABLE_SIZE));
         ImGui::SameLine();
         ImGui::Text("Settings");
 

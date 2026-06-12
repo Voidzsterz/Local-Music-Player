@@ -22,8 +22,11 @@ They must be manually deleted through the "delete" method
 // This constructor in particular uses initalizer lists, documentation for that can be found in Renderer.cpp
 
 App::App(int width, int height)
-    : m_windowWidth(width), m_windowHeight(height), m_ui(m_directories)
-{ init(); }
+    : m_windowWidth(width), m_windowHeight(height)
+{ 
+    init();
+    m_ui = std::make_unique<UI>(*m_renderer, m_directories);
+}
 
 App::~App() { shutdown(); } // Destructor
 
@@ -53,7 +56,6 @@ void App::init()
 
     // Renderer initalization
     m_renderer = new Renderer(m_window);
-    m_ui.createTextures();
 }
 
 void App::run()
@@ -65,7 +67,7 @@ void App::run()
         glfwPollEvents();
 
         m_renderer->newFrame();
-        m_ui.render();
+        m_ui->render();
         m_renderer->presentFrame();
         glfwSwapBuffers(m_window);
     }

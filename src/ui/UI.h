@@ -1,14 +1,14 @@
 #pragma once
 
+#include "../renderer/Renderer.h"
+
 #include "contents/SongsUI.h"
 #include "contents/DirectoriesUI.h"
 
 class UI
 {
 public:
-    UI(Directories& directories);
-    ~UI();
-    void createTextures();
+    UI(Renderer& renderer, Directories& directories);
 
     void render();
 private:
@@ -16,17 +16,8 @@ private:
     enum class ActiveTab { Home, Songs, Library, Directories, Settings, };
     ActiveTab m_activeTab = ActiveTab::Home;
 
+    Renderer& m_renderer;
     Directories& m_directories;
-
-    // Images (Texture IDs)
-    unsigned int icon_home = 0;
-    unsigned int icon_songs = 0;
-    unsigned int icon_library = 0;
-    unsigned int icon_directories = 0;
-    unsigned int icon_settings = 0;
-
-    unsigned int icon_folder = 0;
-    unsigned int icon_musicFile = 0;
 
     // Contents
     SongsUI m_songsUI;

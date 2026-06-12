@@ -13,11 +13,12 @@ public:
     
     void run();
 private:
+
     GLFWwindow* m_window = nullptr;
 
     // List of header files, these will be passed down via "Dependency Injection" to whatever files need it (like a tree)
     Directories m_directories;
-    UI m_ui;
+    std::unique_ptr<UI> m_ui; // ???
     Renderer* m_renderer = nullptr;
 
     int m_windowWidth  = 1280;

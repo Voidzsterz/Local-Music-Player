@@ -8,8 +8,8 @@
 // Easier to read this way
 static const float WINDOW_PADDING = 5.0f;
 
-SongsUI::SongsUI(Directories& directories)
-    : m_directories(directories)
+SongsUI::SongsUI(Renderer& renderer, Directories& directories)
+    : m_renderer(renderer), m_directories(directories)
 {}
 
 void SongsUI::render()
@@ -62,6 +62,12 @@ void SongsUI::renderTree(const PathNode& node)
     ImGui::TableNextRow();
     ImGui::TableSetColumnIndex(0);
 
+    // Variable to adjust the node height
+    float NODE_HEIGHT = 20.0f;
+    // Variable to adjust how much to offset the icons to the right by
+    float ICON_OFFSET = 7.5f;
+
+    ImGui::PushFont(m_renderer.font_soraBold20);
     if (node.isDirectory)
     {
         if (ImGui::TreeNode(node.name.c_str()))
@@ -76,4 +82,5 @@ void SongsUI::renderTree(const PathNode& node)
         // "%s" prevents it from being a securiy risk, since it'll treat it as a plain string
         ImGui::Text("%s", node.name.c_str());
     }
+    ImGui::PopFont();
 }
