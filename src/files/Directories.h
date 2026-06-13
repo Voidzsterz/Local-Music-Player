@@ -16,6 +16,7 @@ struct PathNode
     std::string name;
     std::filesystem::path fullPath;
     bool isDirectory;
+    int songIndex = -1; // -1 is for directories, index into m_songItems for the files
     std::vector<PathNode> children;
 };
 

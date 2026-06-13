@@ -35,21 +35,43 @@ void SongsUI::render()
         return;
     }
 
-    // Genuinely sorry if this part of the code specifically with the "needs rescan" stuff is confusing, I'll try my best to clean it up soon enough
     if (m_directories.needsRescan())
     {
         m_cachedTrees.clear();
+        m_songItems.clear();
+
         for (const auto& dir : m_directories.getDirectories())
             m_cachedTrees.push_back(m_directories.scanPath(dir));
+
+        // collectSongs scans the cached tree, so it is necessary to "rescan" here
+        int index = 0;
+        for (auto& root : m_cachedTrees)
+            collectSongs(root, index);
+
         m_directories.clearRescan();
     }
 
+    // Wrap all the renderTree logic inside a ImGui multi-select
+    m_selection.UserData = (void*)&m_songItems;
+    m_selection.AdapterIndexToStorageId = [](ImGuiSelectionBasicStorage* self, int index)
+    {
+        auto* items = static_cast<std::vector<SongItem>*>(self->UserData);
+        return (*items)[index].ID;
+    };
+
+    ImGuiMultiSelectIO* multiSelectIO = ImGui::BeginMultiSelect(ImGuiMultiSelectFlags_None, m_selection.Size, m_songItems.size());
+    m_selection.ApplyRequests(multiSelectIO);
+
     if (ImGui::BeginTable("SongsTree", 1, ImGuiTableFlags_RowBg))
     {
-        for (const auto& root : m_cachedTrees)
-            renderTree(root);
+        int songIndex = 0;
+        for (auto& root : m_cachedTrees)
+            renderTree(root, songIndex);
         ImGui::EndTable();
     }
+
+    multiSelectIO = ImGui::EndMultiSelect();
+    m_selection.ApplyRequests(multiSelectIO);
 }
 
 void SongsUI::renderTopbar()
@@ -57,34 +79,47 @@ void SongsUI::renderTopbar()
     ImGui::Text("Find your songs here");
 }
 
-void SongsUI::renderTree(const PathNode& node)
+void SongsUI::renderTree(const PathNode& node, int& songIndex)
 {
+    // Variable to adjust the node height
+    float NODE_HEIGHT = 16.0f;
+
     ImGui::TableNextRow();
     ImGui::TableSetColumnIndex(0);
 
-    // Variable to adjust the node height
-    float NODE_HEIGHT = 20.0f;
-    // Variable to adjust how much to offset the icons to the right by
-    float ICON_OFFSET = 7.5f;
-
     if (node.isDirectory)
     {
-        ImGui::PushFont(m_renderer.font_soraLight20);
         if (ImGui::TreeNode(node.name.c_str()))
         {
             for (const auto& child : node.children)
-            renderTree(child);
+                renderTree(child, songIndex);
             ImGui::TreePop();
         }
-        ImGui::PopFont();
     }
     else
     {
-        ImGui::PushFont(m_renderer.font_soraBold20);
+        bool selected = m_selection.Contains(m_songItems[songIndex].ID);    
+
         ImGui::Image((ImTextureID)(uintptr_t)m_renderer.icon_musicFile, ImVec2(NODE_HEIGHT,NODE_HEIGHT));
         ImGui::SameLine();
-        // "%s" prevents it from being a securiy risk, since it'll treat it as a plain string
-        ImGui::Text("%s", node.name.c_str());
-        ImGui::PopFont();
+
+        ImGui::SetNextItemSelectionUserData(songIndex);
+        ImGui::Selectable(node.name.c_str(), selected,ImGuiSelectableFlags_None,ImVec2(0,NODE_HEIGHT));
+
+        songIndex++;
     }
+}
+
+void SongsUI::collectSongs(PathNode& node, int& index)
+{
+    if (!node.isDirectory)
+    {
+        node.songIndex = index;
+        m_songItems.push_back({(ImGuiID)index, node.fullPath.string()});
+        index++;
+        return;
+    }
+
+    for (auto& child : node.children)
+        collectSongs(child, index);
 }
